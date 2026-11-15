@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>A Surprise Awaits</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="gifts.css" />
+    <style>
+      .cd {
+        display: flex;
+        gap: clamp(8px, 2.6vw, 16px);
+        justify-content: center;
+        margin: 6px 0 16px;
+      }
+      .u {
+        min-width: clamp(62px, 19vw, 92px);
+        padding: clamp(10px, 2vh, 16px) 6px;
+        border-radius: 20px;
+        background: linear-gradient(
+          160deg,
+          rgba(255, 255, 255, 0.13),
+          rgba(255, 255, 255, 0.04)
+        );
+        border: 1.5px solid rgba(240, 217, 154, 0.45);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+        animation: in 0.9s both;
+      }
+      .u b {
+        display: block;
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 600;
+        font-size: clamp(2rem, min(9vw, 6vh), 3rem);
+        line-height: 1;
+        color: var(--gold-soft);
+        font-variant-numeric: tabular-nums;
+      }
+      .u i {
+        font-size: 0.72rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #ecdccf;
+        font-style: normal;
+      }
+      .note {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: clamp(1.05rem, 3.6vw, 1.35rem);
+        color: var(--gold-soft);
+        max-width: 420px;
+        animation: in 0.9s 1s both;
+        opacity: 0;
+      }
+      .pulse .u b {
+        animation: hint 0.8s ease-in-out infinite;
+      }
+      #fw {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 5;
+      }
+      #lock.gone {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="spot" aria-hidden="true"></div>
+    <canvas id="sparks" aria-hidden="true"></canvas>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="eyebrow" id="ey">a little surprise for</div>
+      <h1 id="h">Bhuvan</h1>
+      <div id="lock">
+        <div class="cd" id="cd">
+          <div class="u"><b id="d">00</b><i>days</i></div>
+          <div class="u"><b id="hh">00</b><i>hours</i></div>
+          <div class="u"><b id="mm">00</b><i>mins</i></div>
+          <div class="u"><b id="ss">00</b><i>secs</i></div>
+        </div>
+        <div class="note">Your surprise opens at 12:00 AM on 10 December ♥</div>
+      </div>
+      <div class="msg" id="m">Something special is waiting for you…</div>
+      <div class="btns" id="b">
+        <a class="btn gold" href="Happy_Birthday_Page_0.html" data-nav
+          >Open it ♥</a
+        >
+      </div>
+    </div>
+    <canvas id="fw"></canvas>
+    <script src="gifts.js"></script>
+    <script src="music.js"></script>
+    <script>
+      /* Birthday moment: 10 Dec 2026, 12:00 AM India time (IST, +05:30). Change the offset if he lives elsewhere. */
+      var T = new Date("2026-12-10T00:00:00+05:30").getTime();
+      /* Open index.html?preview to skip the lock while you test it */
+      var preview = location.search.indexOf("preview") > -1;
+      var $ = function (i) {
+          return document.getElementById(i);
+        },
+        p2 = function (n) {
+          return (n < 10 ? "0" : "") + n;
+        },
+        opened = false,
+        timer;
+
+      var cv = $("fw"),
+        cx = cv.getContext("2d"),
+        F = [],
+        run = false;
+      function rs() {
+        cv.width = innerWidth;
+        cv.height = innerHeight;
+      }
+      rs();
+      addEventListener("resize", rs);
+      function burst() {
+        var x = cv.width * (0.15 + Math.random() * 0.7),
+          y = cv.height * (0.1 + Math.random() * 0.45),
+          h = Math.random() * 70 + 20;
+        for (var k = 0; k < 60; k++) {
+          var a = (k / 60) * 6.28,
+            s = 1.5 + Math.random() * 3.4;
+          F.push({
+            x: x,
+            y: y,
+            vx: Math.cos(a) * s,
+            vy: Math.sin(a) * s,
+            l: 1,
+            h: h,
+          });
+        }
+      }
+      (function d() {
+        cx.clearRect(0, 0, cv.width, cv.height);
+        F = F.filter(function (p) {
+          return p.l > 0;
+        });
+        F.forEach(function (p) {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.04;
+          p.vx *= 0.985;
+          p.l -= 0.013;
+          cx.fillStyle = "hsla(" + p.h + ",90%,70%," + p.l + ")";
+          cx.beginPath();
+          cx.arc(p.x, p.y, 2.3, 0, 6.28);
+          cx.fill();
+        });
+        requestAnimationFrame(d);
+      })();
+
+      function unlock(celebrate) {
+        if (opened) return;
+        opened = true;
+        clearInterval(timer);
+        $("lock").classList.add("gone");
+        $("ey").textContent = "the moment has arrived";
+        $("h").textContent = "Happy Birthday, Bhuvan!";
+        $("m").textContent = "Your surprise is ready. ♥";
+        $("m").classList.add("show");
+        setTimeout(
+          function () {
+            $("b").classList.add("show");
+          },
+          celebrate ? 2200 : 600,
+        );
+        if (celebrate) {
+          var n = 0,
+            iv = setInterval(function () {
+              burst();
+              if (++n > 14) clearInterval(iv);
+            }, 350);
+          burst();
+          G.hearts($("h"), 30, "🎉");
+          if (navigator.vibrate) navigator.vibrate([80, 40, 120]);
+        } else {
+          burst();
+          setTimeout(burst, 500);
+        }
+      }
+      function tick() {
+        var r = T - Date.now();
+        if (r <= 0 || preview) {
+          unlock(loadedLocked);
+          return;
+        }
+        var s = Math.floor(r / 1000);
+        $("d").textContent = p2(Math.floor(s / 86400));
+        $("hh").textContent = p2(Math.floor((s % 86400) / 3600));
+        $("mm").textContent = p2(Math.floor((s % 3600) / 60));
+        $("ss").textContent = p2(s % 60);
+        $("cd").classList.toggle("pulse", r < 60000);
+      }
+      var loadedLocked =
+        T - Date.now() > 0 &&
+        !preview; /* true when he arrived while still locked -> full fireworks at midnight */
+      tick();
+      if (!opened) timer = setInterval(tick, 250);
+    </script>
+  </body>
+</html>

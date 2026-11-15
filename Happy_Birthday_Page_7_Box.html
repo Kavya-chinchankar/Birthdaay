@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>A Gift For You</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="gifts.css" />
+    <style>
+      .bx {
+        position: relative;
+        width: min(62vw, 34vh, 280px);
+        aspect-ratio: 1;
+        margin: 0 0 clamp(4px, 1.5vh, 12px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .bx::before {
+        content: "";
+        position: absolute;
+        inset: -12%;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(240, 217, 154, 0.4),
+          transparent 68%
+        );
+        animation: gl 3s ease-in-out infinite;
+      }
+      @keyframes gl {
+        50% {
+          transform: scale(1.2);
+          opacity: 0.7;
+        }
+      }
+      .tap {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: none;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        animation: bounce 2.2s ease-in-out infinite;
+        filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.5));
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-3deg);
+        }
+        25% {
+          transform: translateY(-14px) rotate(3deg);
+        }
+        50% {
+          transform: translateY(0) rotate(-3deg);
+        }
+      }
+      .tap svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+      #lid {
+        transform-box: fill-box;
+        transform-origin: 50% 100%;
+      }
+      .bx.open .tap {
+        animation: none;
+      }
+      .bx.open #lid {
+        animation: lid 1s cubic-bezier(0.3, 1.3, 0.5, 1) forwards;
+      }
+      @keyframes lid {
+        40% {
+          transform: translateY(-40px) rotate(-18deg);
+        }
+        100% {
+          transform: translate(40px, -130px) rotate(40deg);
+          opacity: 0;
+        }
+      }
+      .rays {
+        position: absolute;
+        inset: -60%;
+        opacity: 0;
+        pointer-events: none;
+        background: repeating-conic-gradient(
+          rgba(240, 217, 154, 0.35) 0 6deg,
+          transparent 6deg 18deg
+        );
+        -webkit-mask: radial-gradient(circle, #000 8%, transparent 62%);
+        mask: radial-gradient(circle, #000 8%, transparent 62%);
+      }
+      .bx.open .rays {
+        animation: rays 2.4s ease-out forwards;
+      }
+      @keyframes rays {
+        0% {
+          opacity: 0;
+          transform: scale(0.3) rotate(0);
+        }
+        30% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: scale(1.2) rotate(70deg);
+        }
+      }
+      .heart {
+        position: absolute;
+        left: 50%;
+        top: 38%;
+        width: 46%;
+        transform: translate(-50%, 0) scale(0);
+        opacity: 0;
+        filter: drop-shadow(0 0 18px rgba(255, 100, 130, 0.8));
+        pointer-events: none;
+      }
+      .bx.open .heart {
+        animation:
+          rise 1.6s 0.5s cubic-bezier(0.2, 1.2, 0.4, 1) forwards,
+          beat 1s 2.1s ease-in-out infinite;
+      }
+      @keyframes rise {
+        to {
+          transform: translate(-50%, -62%) scale(1);
+          opacity: 1;
+        }
+      }
+      @keyframes beat {
+        0%,
+        100% {
+          transform: translate(-50%, -62%) scale(1);
+        }
+        50% {
+          transform: translate(-50%, -62%) scale(1.12);
+        }
+      }
+      .bx.open .tap {
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="spot" aria-hidden="true"></div>
+    <canvas id="sparks" aria-hidden="true"></canvas>
+    <div class="grain" aria-hidden="true"></div>
+
+    <div class="wrap">
+      <div class="eyebrow">gift number two</div>
+      <h1 id="h">A little gift box</h1>
+      <div class="bx" id="bx">
+        <div class="rays"></div>
+        <button class="tap" id="tap" aria-label="Open the gift box">
+          <svg viewBox="0 0 200 200">
+            <defs>
+              <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#b02f40" />
+                <stop offset="1" stop-color="#7a1626" />
+              </linearGradient>
+              <linearGradient id="rb" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#d8b45c" />
+                <stop offset=".5" stop-color="#f6e3a8" />
+                <stop offset="1" stop-color="#d8b45c" />
+              </linearGradient>
+            </defs>
+            <rect
+              x="32"
+              y="94"
+              width="136"
+              height="88"
+              rx="8"
+              fill="url(#bg)"
+            />
+            <rect x="90" y="94" width="20" height="88" fill="url(#rb)" />
+            <g id="lid">
+              <rect
+                x="22"
+                y="68"
+                width="156"
+                height="32"
+                rx="8"
+                fill="#c9495a"
+              />
+              <rect x="90" y="68" width="20" height="32" fill="url(#rb)" />
+              <path
+                d="M100 68 C70 30 40 44 62 64 C72 72 92 70 100 68z"
+                fill="#f0d99a"
+              />
+              <path
+                d="M100 68 C130 30 160 44 138 64 C128 72 108 70 100 68z"
+                fill="#d8b45c"
+              />
+              <circle cx="100" cy="66" r="9" fill="#f6e3a8" />
+            </g>
+          </svg>
+        </button>
+        <svg class="heart" viewBox="0 0 100 90">
+          <defs>
+            <linearGradient id="hg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ff8fa3" />
+              <stop offset="1" stop-color="#d81e4a" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M50 86 C8 58 -2 28 24 12 C38 4 50 12 50 24 C50 12 62 4 76 12 C102 28 92 58 50 86z"
+            fill="url(#hg)"
+          />
+          <ellipse
+            cx="30"
+            cy="26"
+            rx="7"
+            ry="4"
+            fill="#fff"
+            opacity=".5"
+            transform="rotate(-30 30 26)"
+          />
+        </svg>
+      </div>
+      <div class="hint" id="hint">Tap the box to open it</div>
+      <div class="msg" id="m">
+        Inside this box is all my love, wrapped up just for you. 💝
+      </div>
+      <div class="btns" id="b">
+        <a class="btn ghost" href="Happy_Birthday_Page_7.html" data-nav
+          >← Back to gifts</a
+        >
+        <a class="btn gold" href="Happy_Birthday_Page_7.5.html" data-nav
+          >Next page →</a
+        >
+      </div>
+    </div>
+    <script>
+      var bx = document.getElementById("bx"),
+        done = false;
+      document.getElementById("tap").addEventListener("click", function () {
+        if (done) return;
+        done = true;
+        bx.classList.add("open");
+        G.mark("box");
+        document.getElementById("hint").style.display = "none";
+        document.getElementById("h").textContent = "Surprise! 🎉";
+        G.hearts(bx, 24, "♥");
+        if (navigator.vibrate) navigator.vibrate([50, 30, 80]);
+        setTimeout(function () {
+          document.getElementById("m").classList.add("show");
+        }, 1800);
+        setTimeout(function () {
+          document.getElementById("b").classList.add("show");
+        }, 2800);
+      });
+    </script>
+    <script src="gifts.js"></script>
+    <script src="music.js"></script>
+  </body>
+</html>

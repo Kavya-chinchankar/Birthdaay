@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+  <title>A Day Made Special</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:wght@500;600&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="gifts.css" />
+
+  <style>
+    .num {
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 600;
+      font-size: clamp(5rem, 26vh, 11rem);
+      line-height: 1;
+      margin: 0;
+      color: var(--gold-soft);
+      text-shadow: 0 0 40px rgba(240, 217, 154, 0.55);
+    }
+
+    .eyebrow {
+      letter-spacing: 5px;
+    }
+
+    h1 {
+      font-style: italic;
+    }
+
+    .msg {
+      max-width: 540px;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="spot" aria-hidden="true"></div>
+  <canvas id="sparks" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="eyebrow">10 December · A Special Day</div>
+
+    <h1>A Little Magic Begins...</h1>
+
+    <div class="num" id="n">0</div>
+
+    <div class="msg" id="m">
+      Some people make ordinary moments extraordinary.
+      Some people make life a little more beautiful just by being in it.
+      And today, everything is about celebrating one such person. ✨
+    </div>
+
+    <div class="btns" id="b">
+      <a class="btn gold" href="A_Surprise_Awaits_page_1.html" data-nav>
+        Discover Your Surprise →
+      </a>
+    </div>
+
+  </div>
+
+  <script src="gifts.js"></script>
+  <script src="music.js"></script>
+
+  <script>
+    var n = document.getElementById("n"),
+        v = 0,
+        t = setInterval(function () {
+          v++;
+          n.textContent = v;
+
+          if (v >= 27) {
+            clearInterval(t);
+
+            G.hearts(n, 22, "✨");
+
+            document.getElementById("m").classList.add("show");
+
+            setTimeout(function () {
+              document.getElementById("b").classList.add("show");
+            }, 1200);
+          }
+        }, 70);
+  </script>
+
+</body>
+</html>

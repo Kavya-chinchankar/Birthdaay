@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>A Flower For You</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:wght@500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="gifts.css">
+
+<style>
+.fl {
+  width: min(62vw, 36vh, 300px);
+  margin: 0 0 clamp(6px, 2vh, 16px);
+}
+
+.fl svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 14px 20px rgba(0,0,0,.4));
+}
+
+.sway {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: sway 4s ease-in-out 3.2s infinite;
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
+}
+
+.stem {
+  stroke-dasharray: 170;
+  stroke-dashoffset: 170;
+  animation: grow 1.4s .3s ease-out forwards;
+}
+
+@keyframes grow {
+  to { stroke-dashoffset: 0; }
+}
+
+.leaf {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform: scale(0);
+  animation: sc .8s cubic-bezier(.2,1.4,.4,1) forwards;
+}
+
+@keyframes sc {
+  to { transform: scale(1); }
+}
+
+.pt {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform: scale(0);
+  animation: sc .9s cubic-bezier(.2,1.5,.4,1) forwards;
+}
+
+.ctr {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0);
+  animation: sc .7s 2.6s cubic-bezier(.2,1.6,.4,1) forwards;
+}
+
+.glow {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  width: 140%;
+  aspect-ratio: 1;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle,rgba(255,150,170,.35),transparent 65%);
+  opacity: 0;
+  animation: gl 3s 1.6s ease-in-out infinite;
+}
+
+@keyframes gl {
+  0%,100% { opacity: .35; }
+  50% { opacity: .8; }
+}
+</style>
+</head>
+
+<body>
+
+<div id="spot" aria-hidden="true"></div>
+<canvas id="sparks" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="wrap">
+
+  <div class="eyebrow">gift number one</div>
+
+  <h1>A flower for you</h1>
+
+  <div class="fl" style="position:relative">
+    <div class="glow"></div>
+
+    <svg viewBox="0 0 200 270">
+      <defs>
+
+        <radialGradient id="po" cx=".5" cy=".9" r=".9">
+          <stop offset="0" stop-color="#c2275a"/>
+          <stop offset="1" stop-color="#f27a9a"/>
+        </radialGradient>
+
+        <radialGradient id="pi" cx=".5" cy=".9" r=".9">
+          <stop offset="0" stop-color="#e04877"/>
+          <stop offset="1" stop-color="#fbb4c6"/>
+        </radialGradient>
+
+      </defs>
+
+      <g class="sway">
+
+        <!-- Stem -->
+        <path class="stem"
+          d="M100 262 C100 215 95 175 100 125"
+          stroke="#4f9a5a"
+          stroke-width="7"
+          fill="none"
+          stroke-linecap="round"/>
+
+        <!-- Leaves -->
+        <path class="leaf"
+          style="animation-delay:1s"
+          d="M98 215 C66 210 48 188 44 168 C72 168 92 186 98 215z"
+          fill="#5fb36a"/>
+
+        <path class="leaf"
+          style="animation-delay:1.2s"
+          d="M102 195 C134 190 152 170 156 150 C128 150 108 166 102 195z"
+          fill="#4f9a5a"/>
+
+        <!-- Outer petals -->
+        <g transform="translate(100 112) rotate(0)">
+          <ellipse class="pt" style="animation-delay:1.60s" cy="-40" rx="21" ry="40" fill="url(#po)"/>
+        </g>
+
+        <g transform="translate(100 112) rotate(45)">
+          <ellipse class="pt" style="animation-delay:1.68s" cy="-40" rx="21" ry="40" fill="url(#po)"/>
+        </g>
+
+        <g transform="translate(100 112) rotate(90)">
+          <ellipse class="pt" style="animation-delay:1.76s" cy="-40" rx="21" ry="40" fill="url(#po)"/>
+        </g>
+
+        <g transform="translate(100 112) rotate(135)">
+          <ellipse class="pt" style="animation-delay:1.84s" cy="-40" rx="21" ry="40" fill="url(#po)"/>
+        </g>
+
+        <g transform="translate(100 112) rotate(180)">
+          <ellipse class="pt" style="animation-delay:1.92s" cy="-40" rx="21" ry="40" fill="url(#po)"/>
+        </g>
+
+        <g transform="translate(100 112) rotate(225)">
+          <ellipse class="pt" style="animation-delay:2.00s" cy="-40" rx="21" ry="40" fill="url(#po)"/>
+        </g>
+
+        <g transform="translate(100 112) rotate(270)">
+          <ellipse class="pt" style="animation-delay:2.08s" cy="-40" rx="21" ry="40" fill="url(#po)"/>
+        </g>
+
+        <g transform="translate(100 112) rotate(315)">
+          <ellipse class="pt" style="animation-delay:2.16s" cy="-40" rx="21" ry="40" fill="url(#po)"/>
+        </g>
+
+        <!-- Inner petals -->
+        <g transform="translate(100 112) rotate(30)">
+          <ellipse class="pt" style="animation-delay:2.20s" cy="-26" rx="15" ry="28" fill="url(#pi)"/>
+        </g>
+
+        <g transform="translate(100 112) rotate(90)">
+          <ellipse class="pt" style="animation-delay:2.26s" cy="-26" rx="15" ry="28" fill="url(#pi)"/>
+        </g>
+
+        <g transform="translate(100 112) rotate(150)">
+          <ellipse class="pt" style="animation-delay:2.32s" cy="-26" rx="15" ry="28" fill="url(#pi)"/>
+        </g>
+
+        <g transform="translate(100 112) rotate(210)">
+          <ellipse class="pt" style="animation-delay:2.38s" cy="-26" rx="15" ry="28" fill="url(#pi)"/>
+        </g>
+
+        <g transform="translate(100 112) rotate(270)">
+          <ellipse class="pt" style="animation-delay:2.44s" cy="-26" rx="15" ry="28" fill="url(#pi)"/>
+        </g>
+
+        <g transform="translate(100 112) rotate(330)">
+          <ellipse class="pt" style="animation-delay:2.50s" cy="-26" rx="15" ry="28" fill="url(#pi)"/>
+        </g>
+
+        <!-- Flower center -->
+        <circle class="ctr" cx="100" cy="112" r="13" fill="#f0d99a"/>
+
+        <g class="ctr" fill="#b8892f">
+          <circle cx="96" cy="108" r="2"/>
+          <circle cx="104" cy="110" r="2"/>
+          <circle cx="99" cy="116" r="2"/>
+        </g>
+
+      </g>
+    </svg>
+  </div>
+
+  <!-- Message -->
+  <div class="msg" id="m">
+    Like this flower, you make everything around me bloom. 🌸
+  </div>
+
+  <!-- Navigation -->
+  <div class="btns" id="b">
+
+    <a class="btn ghost"
+       href="Happy_Birthday_Page_7.html"
+       data-nav>
+       ← Back to gifts
+    </a>
+
+    <a class="btn gold"
+       href="Happy_Birthday_Page_7.5.html"
+       data-nav>
+       Next page →
+    </a>
+
+  </div>
+
+</div>
+
+<!-- IMPORTANT: Load shared scripts BEFORE using G -->
+<script src="gifts.js"></script>
+<script src="music.js"></script>
+
+<!-- Flower page animation -->
+<script>
+G.mark("flower");
+
+setTimeout(function() {
+  document.getElementById("m").classList.add("show");
+
+  G.hearts(
+    document.querySelector(".fl"),
+    10,
+    "🌸"
+  );
+
+}, 3300);
+
+setTimeout(function() {
+  document.getElementById("b").classList.add("show");
+}, 4300);
+</script>
+
+</body>
+</html>

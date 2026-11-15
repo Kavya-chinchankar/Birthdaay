@@ -1,0 +1,452 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>A Letter For You</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Lora:wght@500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="gifts.css">
+
+<style>
+.stagel {
+  position:relative;
+  width:min(90vw,440px);
+  height:min(62vh,520px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:clamp(6px,2vh,16px);
+  perspective:1200px;
+}
+
+/* ENVELOPE */
+
+.env {
+  position:relative;
+  z-index:3;
+  width:min(70vw,300px);
+  aspect-ratio:1.45;
+  cursor:pointer;
+  background:none;
+  border:0;
+  padding:0;
+  perspective:700px;
+  animation:floatEnvelope 3.2s ease-in-out infinite;
+  filter:drop-shadow(0 16px 24px rgba(0,0,0,.5));
+  transition:opacity .6s,transform .7s;
+  -webkit-tap-highlight-color:transparent;
+}
+
+@keyframes floatEnvelope {
+  50% { transform:translateY(-10px); }
+}
+
+.env .back {
+  position:absolute;
+  inset:0;
+  border-radius:10px;
+  background:#e8d5b0;
+  border:1px solid #c8ae7d;
+}
+
+.env .front {
+  position:absolute;
+  inset:0;
+  border-radius:10px;
+  background:linear-gradient(135deg,#f6ead2,#ead8b5);
+  clip-path:polygon(0 0,50% 52%,100% 0,100% 100%,0 100%);
+  z-index:2;
+}
+
+.env .flap {
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:56%;
+  background:linear-gradient(180deg,#f3e3c3,#e3cd9f);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top;
+  transition:transform .8s ease;
+  z-index:4;
+}
+
+.env .seal {
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:15%;
+  aspect-ratio:1;
+  transform:translate(-50%,-50%);
+  z-index:5;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#e0405a,#8d1428);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:clamp(12px,4vw,20px);
+  color:#ffd9df;
+  box-shadow:0 3px 8px rgba(0,0,0,.4);
+  transition:opacity .3s;
+}
+
+.env.open .flap {
+  transform:rotateX(180deg);
+  z-index:1;
+}
+
+.env.open .seal {
+  opacity:0;
+}
+
+.env.gone {
+  opacity:0;
+  transform:translateY(50px) scale(.65);
+  pointer-events:none;
+}
+
+/* REALISTIC TORN LETTER */
+
+.paper {
+  position:absolute;
+  z-index:5;
+  left:50%;
+  top:50%;
+
+  width:min(88vw,420px);
+  max-height:min(62vh,520px);
+  overflow-y:auto;
+
+  padding:clamp(24px,4vh,38px) clamp(23px,6vw,38px);
+
+  background:
+    radial-gradient(ellipse at 20% 15%,rgba(190,145,80,.12),transparent 35%),
+    radial-gradient(ellipse at 85% 85%,rgba(160,110,50,.13),transparent 35%),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 28px,
+      rgba(145,110,70,.09) 29px,
+      transparent 30px
+    ),
+    linear-gradient(145deg,#fff8e9,#f1e2c3);
+
+  color:#4a1520;
+  text-align:left;
+
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.05rem,min(4.2vw,3vh),1.35rem);
+  line-height:1.48;
+
+  box-shadow:
+    0 25px 55px rgba(0,0,0,.55),
+    inset 0 0 22px rgba(145,100,45,.13);
+
+  /* Uneven torn paper edges */
+  clip-path:polygon(
+    2% 1%,7% 2%,12% 0%,18% 2%,24% 1%,
+    31% 2%,38% 0%,45% 2%,52% 1%,59% 2%,
+    66% 0%,73% 2%,80% 1%,87% 2%,94% 0%,
+    99% 2%,98% 9%,100% 16%,98% 24%,
+    100% 32%,98% 40%,100% 48%,98% 56%,
+    100% 64%,98% 72%,100% 80%,98% 88%,
+    100% 96%,94% 99%,87% 98%,80% 100%,
+    73% 98%,66% 100%,59% 98%,52% 100%,
+    45% 98%,38% 100%,31% 98%,24% 100%,
+    17% 98%,10% 100%,3% 98%,1% 92%,
+    2% 84%,0% 76%,2% 68%,0% 60%,
+    2% 52%,0% 44%,2% 36%,0% 28%,
+    2% 20%,0% 12%
+  );
+
+  opacity:0;
+  pointer-events:none;
+
+  transform:translate(-50%,30%) scale(.55) rotate(-3deg);
+  transform-origin:center center;
+
+  transition:
+    opacity .6s ease,
+    transform 1s cubic-bezier(.18,1.25,.35,1);
+}
+
+.paper.show {
+  opacity:1;
+  pointer-events:auto;
+  transform:translate(-50%,-50%) scale(1) rotate(0deg);
+}
+
+/* LITTLE PAPER DETAILS */
+
+.paper-heading {
+  text-align:center;
+  font-style:italic;
+  font-size:1.05em;
+  color:#9b5b48;
+  margin-bottom:16px;
+}
+
+.paper .date-line {
+  text-align:right;
+  font-size:.85em;
+  font-style:italic;
+  color:#94765c;
+  margin-bottom:18px;
+}
+
+.paper p {
+  margin:0 0 .85em;
+  opacity:0;
+  transform:translateY(10px);
+}
+
+.paper.show p {
+  animation:letterWriting .8s both;
+}
+
+@keyframes letterWriting {
+  to {
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.paper .sig {
+  font-style:italic;
+  font-weight:600;
+  text-align:right;
+  margin:1.2em 0 0;
+  color:#8c2537;
+  font-size:1.15em;
+}
+
+.paper .heart-divider {
+  text-align:center;
+  color:#bd5263;
+  letter-spacing:8px;
+  margin:16px 0;
+  font-size:1em;
+}
+
+/* SCROLLBAR */
+
+.paper::-webkit-scrollbar {
+  width:5px;
+}
+
+.paper::-webkit-scrollbar-thumb {
+  background:#c7a77a;
+  border-radius:10px;
+}
+
+/* HINT AND BUTTONS */
+
+#hint {
+  transition:opacity .4s;
+}
+
+#b {
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .7s;
+}
+
+#b.show {
+  opacity:1;
+  pointer-events:auto;
+}
+
+@media(max-height:560px) {
+  .stagel {
+    height:55vh;
+  }
+  .paper {
+    max-height:52vh;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="spot" aria-hidden="true"></div>
+<canvas id="sparks" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="wrap">
+
+  <div class="eyebrow">gift number three</div>
+
+  <h1 id="h">A letter for you</h1>
+
+  <div class="stagel">
+
+    <!-- ENVELOPE -->
+    <button class="env" id="env" aria-label="Open the letter">
+
+      <div class="back"></div>
+      <div class="front"></div>
+      <div class="flap"></div>
+      <div class="seal">♥</div>
+
+    </button>
+
+    <!-- LETTER PAPER -->
+    <div class="paper" id="paper">
+
+      <div class="paper-heading">A little something from my heart</div>
+
+      <div class="date-line">Written with love ♥</div>
+
+      <div id="letterContent"></div>
+
+    </div>
+
+  </div>
+
+  <div class="hint" id="hint">
+    Tap the envelope to open it ♥
+  </div>
+
+  <div class="btns" id="b">
+
+    <a class="btn ghost"
+       href="Happy_Birthday_Page_7.html"
+       data-nav>
+       ← Back to gifts
+    </a>
+
+    <a class="btn gold"
+       href="Happy_Birthday_Page_7.5.html"
+       data-nav>
+       Next page →
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- LOAD SHARED SCRIPTS FIRST -->
+<script src="gifts.js"></script>
+<script src="music.js"></script>
+
+<script>
+
+/* ✏️ YOUR HEARTFELT LETTER */
+
+var LETTER = [
+
+  "My dearest love,",
+
+  "I don't think words will ever be enough to explain how much you mean to me. But today, on your birthday, I want to try. I want you to know just how special you are to me.",
+
+  "Sometimes I find myself smiling at the smallest things because they remind me of you. A random conversation, a silly joke, a little moment we shared — somehow, even the simplest memories become my favourite ones when they involve you.",
+
+  "Thank you for being my happiness on difficult days, for making ordinary moments feel beautiful, and for giving me so many reasons to smile. Thank you for being yourself. I hope you never forget how precious you are.",
+
+  "I may not always find the perfect words, and I may not always express everything perfectly, but please know that I care about you more than you can imagine. I want to celebrate your happiest moments, stand beside you during the difficult ones, and keep making beautiful memories together.",
+
+  "On your birthday, I wish you endless happiness, peaceful days, exciting adventures, and every little thing your heart has been hoping for. You deserve all the love and goodness this world can give.",
+
+  "And if I could make one birthday wish of my own, it would be to keep seeing that beautiful smile of yours, to keep laughing with you, and to have many more moments that we can look back on and call our favourite memories.",
+
+  "No matter how many birthdays come and go, I hope you always remember this: you are loved, you are appreciated, and you mean more to me than these few pages could ever say.",
+
+  "Happy Birthday, my favourite person. Today is your day, but honestly, having you in my life feels like a gift every single day."
+
+];
+
+var SIGN = "Forever yours ♥";
+
+
+/* CREATE THE LETTER */
+
+var content = document.getElementById("letterContent");
+
+function addParagraph(text, delay) {
+
+  var p = document.createElement("p");
+
+  p.textContent = text;
+  p.style.animationDelay = delay + "s";
+
+  content.appendChild(p);
+}
+
+LETTER.forEach(function(text, index) {
+  addParagraph(text, 1 + index * 0.55);
+});
+
+var divider = document.createElement("div");
+divider.className = "heart-divider";
+divider.textContent = "♥ ♥ ♥";
+content.appendChild(divider);
+
+var signature = document.createElement("p");
+signature.className = "sig";
+signature.textContent = SIGN;
+signature.style.animationDelay = (1 + LETTER.length * 0.55) + "s";
+content.appendChild(signature);
+
+
+/* OPEN ENVELOPE AND POP OUT LETTER */
+
+var paper = document.getElementById("paper");
+var env = document.getElementById("env");
+var hint = document.getElementById("hint");
+var buttons = document.getElementById("b");
+
+var done = false;
+
+env.addEventListener("click", function() {
+
+  if (done) return;
+  done = true;
+
+  /* Open envelope flap */
+  env.classList.add("open");
+
+  if (window.G && typeof window.G.mark === "function") {
+    window.G.mark("letter");
+  }
+
+  /* Hide hint */
+  hint.style.opacity = "0";
+
+  /* Letter begins emerging */
+  setTimeout(function() {
+    paper.classList.add("show");
+  }, 300);
+
+  /* Envelope disappears */
+  setTimeout(function() {
+    env.classList.add("gone");
+  }, 700);
+
+  /* Floating hearts */
+  setTimeout(function() {
+    if (window.G && typeof window.G.hearts === "function") {
+      window.G.hearts(paper, 14, "♥");
+    }
+  }, 900);
+
+  /* Show navigation buttons after letter appears */
+  setTimeout(function() {
+    buttons.classList.add("show");
+  }, 1800 + LETTER.length * 550);
+
+  setTimeout(function() {
+    hint.style.display = "none";
+  }, 500);
+
+});
+
+</script>
+
+</body>
+</html>

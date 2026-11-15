@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.classList.add("js")</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Journey</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:wght@500;600&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--iv:#f6f1e7;--ink:#2b0a10;--g:#d8b45c;--gs:#f0d99a;box-sizing:border-box}
+*,*::before,*::after{box-sizing:inherit}
+html{overflow-x:hidden;scroll-behavior:smooth}
+body{margin:0;min-height:100dvh;font-family:'Lora',Georgia,serif;color:var(--iv);text-align:center;position:relative;overflow-x:hidden;
+ background:linear-gradient(135deg,#3a0711,#6a1020,#4a0a16,#7a1626,#3a0711);background-size:400% 400%;background-attachment:fixed;animation:bg 22s ease-in-out infinite;transition:opacity .45s}
+body.leave{opacity:0}
+@keyframes bg{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+body::before,body::after{content:"";position:fixed;border-radius:50%;filter:blur(70px);pointer-events:none;z-index:0}
+body::before{width:380px;height:380px;background:rgba(216,180,92,.2);top:-110px;left:-90px;animation:o1 14s ease-in-out infinite}
+body::after{width:440px;height:440px;background:rgba(200,50,70,.28);bottom:-150px;right:-110px;animation:o2 17s ease-in-out infinite}
+@keyframes o1{50%{transform:translate(90px,70px)}}@keyframes o2{50%{transform:translate(-90px,-60px)}}
+#spot{position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(420px circle at var(--mx,50%) var(--my,45%),rgba(255,190,120,.18),transparent 60%)}
+#sparks{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:40;opacity:.07;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>")}
+.rail{position:fixed;left:6px;top:14vh;bottom:14vh;width:2px;z-index:4;pointer-events:none;background:rgba(240,217,154,.14);border-radius:2px}
+.rail i{position:absolute;inset:0;transform-origin:top;transform:scaleY(var(--p,0));background:linear-gradient(rgba(240,217,154,.15),var(--gs))}
+.rail b{position:absolute;left:-4px;top:calc(var(--p,0)*100%);width:10px;height:10px;margin-top:-5px;border-radius:50%;background:var(--gs);box-shadow:0 0 0 4px rgba(240,217,154,.18),0 0 18px 4px rgba(240,217,154,.7)}
+.wrap{position:relative;z-index:2;max-width:980px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 36px) 22px calc(56px + env(safe-area-inset-bottom,0px))}
+@keyframes in{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes shine{from{background-position:120% 0}to{background-position:-120% 0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.shine{background:linear-gradient(100deg,var(--iv) 30%,var(--gs) 50%,var(--iv) 70%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
+
+/* hero */
+.hero{min-height:calc(100dvh - 90px);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.eyebrow{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.4rem;color:var(--gs);letter-spacing:.06em;animation:in .9s .1s both}
+h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(2.4rem,10vw,4.2rem);line-height:1.1;margin:.15em 0 .5em;animation:in .9s .3s both,shine 6s linear infinite}
+.intro{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.25rem,4.4vw,1.7rem);line-height:1.55;color:#ecdccf;max-width:26em;margin:0;opacity:0;animation:in 1.2s .9s both}
+.cue{margin-top:44px;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gs);font-size:1.1rem;opacity:0;animation:in 1s 1.8s both;display:flex;flex-direction:column;align-items:center;gap:10px}
+.cue span{width:1px;height:46px;background:linear-gradient(var(--gs),transparent);transform-origin:top;animation:drip 2.2s 2.6s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(0);opacity:1}60%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(30px);transition:opacity 1s,transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+
+/* chapters */
+.chapter{padding-top:30px}
+.seal{position:relative;width:70px;height:70px;display:grid;place-items:center;margin:0 auto 14px;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.7rem;color:var(--gs)}
+.seal::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--g),rgba(216,180,92,.06) 35%,var(--gs) 55%,rgba(216,180,92,.06) 80%,var(--g));animation:spin 9s linear infinite;filter:drop-shadow(0 0 10px rgba(240,217,154,.5))}
+.seal::after{content:"";position:absolute;inset:3px;border-radius:50%;background:#4a0a16}
+.seal span{position:relative;z-index:1}
+.age{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.25rem;color:var(--gs);margin:0 0 2px}
+.chapter h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(2.5rem,11vw,4.6rem);line-height:1.12;margin:0 0 22px;padding-bottom:.1em}
+.story{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(1.3rem,4.6vw,1.6rem);line-height:1.62;color:#f6ead9;max-width:30em;margin:0 auto 20px;text-shadow:0 2px 18px rgba(20,0,6,.55)}
+.js .story.rv{transform:none}
+.w{display:inline-block}
+.js .w{opacity:0;filter:blur(6px);transform:translateY(.5em);transition:opacity .8s,filter .8s,transform .9s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--i,0)*30ms)}
+.js .in .w{opacity:1;filter:none;transform:none}
+.orn{display:flex;align-items:center;gap:14px;margin:50px auto;max-width:340px}
+.orn i{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gs))}
+.orn i:last-child{transform:scaleX(-1)}
+.orn b{width:10px;height:10px;background:var(--gs);transform:rotate(45deg);box-shadow:0 0 16px rgba(240,217,154,.8)}
+
+/* photo slider */
+.sl{position:relative;margin:6px -22px 36px}
+.tr{position:relative;display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:26px calc(50% - min(39vw,170px)) 40px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tr::-webkit-scrollbar{display:none}
+.sd{flex:0 0 min(78vw,340px);margin:0;scroll-snap-align:center;opacity:.45;filter:saturate(.6) blur(.6px);transform:scale(.86) rotate(var(--r));transition:transform .7s cubic-bezier(.2,.8,.2,1),opacity .7s,filter .7s}
+.sd.on{opacity:1;filter:none;transform:scale(1) rotate(var(--r))}
+.pl{position:relative;padding:10px 10px 8px;background:#f7ecd6;border-radius:4px;cursor:zoom-in;box-shadow:0 20px 40px rgba(0,0,0,.5),0 0 0 1px rgba(240,217,154,.3),0 0 36px rgba(240,217,154,.12)}
+.pl::before{content:"";position:absolute;top:-12px;left:50%;width:84px;height:24px;margin-left:-42px;transform:rotate(-2deg);background:rgba(236,220,170,.55);box-shadow:0 1px 3px rgba(0,0,0,.2);z-index:2}
+.fr{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:2px;background:repeating-linear-gradient(45deg,#e6d6b4,#e6d6b4 8px,#eee0c4 8px,#eee0c4 16px)}
+.fr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:sepia(.16) contrast(1.05) saturate(.95)}
+.sd.on img{animation:kb 10s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.09) translate(-1.5%,-1%)}}
+.fr::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 40px rgba(60,20,0,.28)}
+.sd figcaption{font-family:'Caveat',cursive;font-size:1.55rem;line-height:1.1;color:#5a4524;padding:8px 0 4px}
+.ar{position:absolute;top:46%;width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(240,217,154,.6);background:rgba(58,7,17,.55);color:var(--gs);font-size:1.5rem;line-height:1;cursor:pointer;z-index:3;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-tap-highlight-color:transparent}
+.ar.l{left:10px}.ar.r{right:10px}.ar:active{transform:scale(.92)}
+.dots{display:flex;gap:7px;justify-content:center;margin-top:-18px}
+.dots i{width:6px;height:6px;border-radius:6px;background:rgba(240,217,154,.3);transition:width .4s,background .4s}
+.dots i.on{width:22px;background:var(--gs)}
+@media(max-width:560px){.ar{display:none}}
+
+.next{position:relative}
+.next h2{font-size:clamp(2.2rem,9.5vw,3.8rem)}
+.btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:30px}
+.btn{font-family:'Lora',serif;font-weight:600;font-size:1.02rem;text-decoration:none;padding:14px 28px;border-radius:999px;-webkit-tap-highlight-color:transparent;transition:transform .3s}
+.btn:active{transform:scale(.95)}
+.gold{color:var(--ink);background:linear-gradient(100deg,var(--g),var(--gs) 45%,var(--g));box-shadow:0 10px 26px rgba(0,0,0,.4)}
+.ghost{color:var(--iv);background:rgba(255,255,255,.07);border:1.5px solid rgba(240,217,154,.6)}
+
+#lb{position:fixed;inset:0;z-index:50;background:rgba(14,4,8,.93);display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;cursor:zoom-out}
+#lb.open{display:flex;animation:in .35s}
+#lb img{max-width:100%;max-height:78vh;border-radius:5px;border:6px solid #f7ecd6;box-shadow:0 24px 70px rgba(0,0,0,.7)}
+#lb div{font-family:'Caveat',cursive;font-size:1.8rem;color:var(--gs)}
+
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important;transition:none!important}#sparks,#spot{display:none}.js .rv,.js .w{opacity:1!important;transform:none!important;filter:none!important}}
+</style>
+</head>
+<body>
+<div id="spot" aria-hidden="true"></div>
+<canvas id="sparks" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div class="rail" aria-hidden="true"><i></i><b></b></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">the story so far</div>
+    <h1>Your life journey</h1>
+    <p class="intro">Once there was a little boy who dreamed bigger than his small world could hold, and trusted God to carry every dream home. Some have already arrived. The rest are on their way.</p>
+    <div class="cue">scroll gently<span></span></div>
+  </div>
+  <div id="tl"></div>
+  <div class="btns rv">
+    <a class="btn ghost" href="Happy_Birthday_Page_7.html" data-nav>← Back</a>
+    <a class="btn gold" href="Happy_Birthday_Page_9.html" data-nav>Next page →</a>
+  </div>
+</div>
+
+<div id="lb" aria-hidden="true"><img alt=""><div></div></div>
+
+<script src="gifts.js"></script>
+<script src="music.js"></script>
+<script>
+(function(){
+var d=document,red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* ---- photos: P(folder, number, caption, focus point) ---- */
+function P(f,n,c,o){return{u:'photos/'+f+n+'.jpg',c:c,o:o||'50% 40%'}}
+/* ---- the story: edit the words freely, each pair is [text, photos] ---- */
+var C=[
+{n:'I',a:'Where it all began',t:'Childhood',b:[
+ ['It all began with a little boy and a dream far too big for his small hands. While others chased the next game, you looked at the horizon and quietly wondered what it would feel like to ride free, to build something of your own, to be surrounded by people who truly loved you. Nobody could see it yet, but the seeds were already planted, and heaven was already watching them grow.',
+  [P('childhood',1,'Held close','50% 12%'),P('childhood',2,'That giggle','50% 50%'),P('childhood',3,'Serious face, big eyes','50% 50%')]]]},
+{n:'II',a:'Dreams taking shape',t:'Dreaming big',b:[
+ ['As the years passed, the dreams only grew louder. A bike of your own, and the open roads waiting beyond it. A job that would make every sacrifice worth it. A beautiful, supportive family. Friends who feel like brothers. Mountains to climb, beaches to chase, and a whole wide world to explore. Long trips and endless nights with the boys, the kind you imagined long before they were real. You never let go of any of it, and you never carried it alone.',
+  [P('growing/',1,'Born to ride','65% 30%'),P('growing/',2,'Lost in music','50% 50%'),P('growing/',3,'Always carrying the music','60% 40%'),P('growing/',4,'Putting in the work','50% 55%'),P('growing/',5,'Best friend','58% 50%')]],
+ ['Because beneath every dream was a faith that never wavered. In the quiet moments, in the hard ones, in the long waiting, you bowed your head and trusted Jesus with everything you could not carry yourself. Your devotion became your strength, and your prayers became the compass that kept you walking, one patient step at a time.',
+  [P('growing/',6,'A kiss and a laugh','70% 40%'),P('growing/',7,'Dressed up, beaming','50% 30%'),P('growing/',8,'Home is where they are','50% 50%')]]]},
+{n:'III',a:'Dreams coming true',t:'On the way',b:[
+ ['And look at what faith and hard work have already done. You got the job you once only dreamed about, and you walk into each day carrying your responsibilities with quiet pride. The little boy who prayed for a future would hardly believe how much of it has already arrived.',
+  [P('today/',1,'Ready for work','50% 35%'),P('today/',2,'Clocked in','50% 45%'),P('today/',3,'Sleeves rolled up'),P('today/',4,'Another day, another goal')]],
+ ['The bike you used to dream about is parked right outside, and it is yours. Every time the engine wakes up, it is a small reminder that dreams do not stay dreams forever. What you once pictured with wide eyes, you now ride with your own two hands.',
+  [P('today/',5,'Cool and calm','50% 20%'),P('today/',6,'Doorway mood','50% 25%'),P('today/',7,'Effortless','50% 20%'),P('today/',8,'Red carpet ready'),P('today/',9,'Coffee-cup vibes','50% 25%'),P('today/',10,'Roaring confidence')]],
+ ['Then come the night rides. Cool air, empty roads, city lights fading behind you and nothing ahead but open sky. Every night ride is a dream you once whispered, finally switched on and roaring.',
+  [P('today/',11,'Late-night thoughts','50% 30%'),P('today/',12,'Always on the move','50% 45%'),P('today/',13,'A quiet night walk','50% 70%')]],
+ ['And you are never riding alone. Long trips with the boys, laughter over the engines, and the whole world waiting to be explored. Mountains are your happy place, beaches your favourite kind of calm, and every new road, town and misty valley is another page you cannot wait to turn. The journeys you always wanted are no longer someday. They are happening, one unforgettable trip at a time.',
+  [P('today/',14,'Lost in the green','50% 60%'),P('today/',15,'Looking ahead','85% 40%'),P('today/',16,'Sky high','50% 80%'),P('today/',17,'Misty waterfall','50% 50%'),P('today/',18,'Chasing waterfalls','50% 55%')]],
+ ['And through it all, you stay exactly who you are: the fun one who makes every trip louder and every table happier, with the softest heart underneath. Above all, you are surrounded by a beautiful, supportive family and friends who cheer louder than anyone, and a God who has been faithful at every turn. Some dreams are already achieved. Many more are on the way. And the One who walked beside the little boy will keep walking beside the man.',
+  [P('today/',19,'Among gentle souls','50% 50%'),P('today/',20,'A gentle touch','50% 50%')]]]},
+{n:'✦',a:'Next',t:'The best is yet to come',cls:'next',b:[
+ ['Keep believing, keep riding, keep praying. What God started in you is far from finished.']]}
+];
+var host=d.getElementById('tl'),sls=[];
+function mk(list){
+ var w=d.createElement('div');w.className='sl rv';
+ w.innerHTML='<div class="tr">'+list.map(function(p,i){return '<figure class="sd" style="--r:'+(i%2?1.5:-1.5)+'deg"><div class="pl"><div class="fr"><img src="'+p.u+'" alt="'+p.c+'" style="object-position:'+p.o+'" loading="lazy" onerror="this.remove()"></div><figcaption>'+p.c+'</figcaption></div></figure>'}).join('')+'</div><button class="ar l" aria-label="Previous photo">‹</button><button class="ar r" aria-label="Next photo">›</button><div class="dots">'+list.map(function(){return '<i></i>'}).join('')+'</div>';
+ return w}
+C.forEach(function(c,ci){
+ var s=d.createElement('section');s.className='chapter '+(c.cls||'');
+ s.innerHTML='<header class="rv"><div class="seal"><span>'+c.n+'</span></div><p class="age">'+c.a+'</p><h2><span class="shine">'+c.t+'</span></h2></header>';
+ c.b.forEach(function(b){
+  var p=d.createElement('p');p.className='story rv';
+  b[0].split(' ').forEach(function(w,i){var x=d.createElement('span');x.className='w';x.style.setProperty('--i',Math.min(i,60));x.textContent=w;p.appendChild(x);p.appendChild(d.createTextNode(' '))});
+  s.appendChild(p);
+  if(b[1]){var w=mk(b[1]);s.appendChild(w);sls.push(w)}});
+ host.appendChild(s);
+ if(ci<C.length-1){var o=d.createElement('div');o.className='orn rv';o.innerHTML='<i></i><b></b><i></i>';host.appendChild(o)}});
+
+/* ---- lightbox ---- */
+var lb=d.getElementById('lb'),lbi=lb.querySelector('img'),lbc=lb.querySelector('div');
+lb.onclick=function(){lb.classList.remove('open')};
+d.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('open')});
+
+/* ---- sliders ---- */
+sls.forEach(function(w){
+ var tr=w.firstChild,sd=[].slice.call(tr.children),dt=[].slice.call(w.querySelector('.dots').children),cur=0,t=false;
+ function go(i){i=(i+sd.length)%sd.length;var s=sd[i];tr.scrollTo({left:s.offsetLeft-(tr.clientWidth-s.offsetWidth)/2,behavior:red?'auto':'smooth'})}
+ function upd(){var m=tr.scrollLeft+tr.clientWidth/2,b=1e9;
+  sd.forEach(function(s,i){var x=Math.abs(s.offsetLeft+s.offsetWidth/2-m);if(x<b){b=x;cur=i}});
+  sd.forEach(function(s,i){s.classList.toggle('on',i===cur);dt[i].classList.toggle('on',i===cur)});t=false}
+ function hold(){w._hold=Date.now()+9000}
+ tr.addEventListener('scroll',function(){if(!t){t=true;requestAnimationFrame(upd)}},{passive:true});
+ ['pointerdown','wheel','touchstart'].forEach(function(e){tr.addEventListener(e,hold,{passive:true})});
+ w.querySelector('.l').onclick=function(){hold();go(cur-1)};
+ w.querySelector('.r').onclick=function(){hold();go(cur+1)};
+ tr.addEventListener('click',function(e){
+  var s=e.target.closest('.sd');if(!s)return;var i=sd.indexOf(s);
+  if(i!==cur){hold();go(i);return}
+  var im=s.querySelector('img');if(!im)return;
+  lbi.src=im.src;lbc.textContent=s.querySelector('figcaption').textContent;lb.classList.add('open')});
+ addEventListener('resize',upd);
+ w._go=go;w._cur=function(){return cur};w._hold=0;w._vis=false;upd();setTimeout(upd,400)});
+if(!red)setInterval(function(){sls.forEach(function(w){if(w._vis&&Date.now()>w._hold)w._go(w._cur()+1)})},4800);
+
+/* ---- reveal on scroll ---- */
+var els=d.querySelectorAll('.rv');
+if(red||!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});sls.forEach(function(w){w._vis=true})}
+else{
+ var io=new IntersectionObserver(function(es){es.forEach(function(e){
+  if(e.target._go)e.target._vis=e.isIntersecting;
+  if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.15,rootMargin:'0px 0px -6% 0px'});
+ els.forEach(function(e){io.observe(e)})}
+
+/* ---- scroll rail ---- */
+var rail=d.querySelector('.rail'),tk=false;
+function pr(){var h=d.documentElement.scrollHeight-innerHeight;rail.style.setProperty('--p',h>0?Math.min(1,Math.max(0,scrollY/h)):0);tk=false}
+addEventListener('scroll',function(){if(!tk){tk=true;requestAnimationFrame(pr)}},{passive:true});pr();
+})();
+</script>
+</body>
+</html>

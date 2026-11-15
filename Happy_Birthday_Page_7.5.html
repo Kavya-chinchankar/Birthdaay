@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>To your dreams</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="gifts.css" />
+    <style>
+      .dr {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: clamp(1.3rem, min(5vw, 3.8vh), 1.9rem);
+        line-height: 1.5;
+        max-width: 560px;
+        color: #fff3e2;
+        margin: 6px 0 20px;
+      }
+      .dr span {
+        opacity: 0;
+        display: inline-block;
+        margin-right: 0.28em;
+        animation: in 0.8s both;
+      }
+      .dr b {
+        color: var(--gold-soft);
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="spot" aria-hidden="true"></div>
+    <canvas id="sparks" aria-hidden="true"></canvas>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="eyebrow">my biggest wish</div>
+      <h1>To all your dreams</h1>
+      <div class="dr" id="d"></div>
+      <div class="btns" id="b">
+        <a class="btn gold" href="Happy_Birthday_Page_8.html" data-nav
+          >One last thing →</a
+        >
+      </div>
+    </div>
+    <script src="gifts.js"></script>
+    <script src="music.js"></script>
+    <script>
+      var T =
+          "Bhuvan, may you achieve everything you have ever dreamed of. May every goal you chase become a story you are proud of. You deserve all of it, and I will be cheering for you, always. ♥".split(
+            " ",
+          ),
+        d = document.getElementById("d");
+      T.forEach(function (x, i) {
+        var s = document.createElement("span");
+        if (i == 0 || x == "dreamed") s.innerHTML = "<b>" + x + "</b>";
+        else s.textContent = x;
+        s.style.animationDelay = 0.6 + i * 0.22 + "s";
+        d.appendChild(s);
+      });
+      setTimeout(
+        function () {
+          G.hearts(d, 16, "✨");
+        },
+        0.6e3 + T.length * 220,
+      );
+      setTimeout(
+        function () {
+          document.getElementById("b").classList.add("show");
+        },
+        1200 + T.length * 220,
+      );
+    </script>
+  </body>
+</html>
